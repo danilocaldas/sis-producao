@@ -25,7 +25,9 @@ public class ConnectionFactoryMysql {
     String driver = "com.mysql.jdbc.Driver";
     String url = "jdbc:mysql://127.0.0.1/db_producao";
     String user = "root";
-    String password = "12345";
+    String password = "";
+    //String password = "12345";
+    
     
     //metodo que conecta ao banco
     public Connection conectar(){
