@@ -1,7 +1,7 @@
 package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
-import br.com.sisproducao.model.Procedimento;
+import br.com.sisproducao.model.ProcedimentoDTO;
 
 /**
  *
@@ -14,7 +14,7 @@ public class CadastroProcedimento extends javax.swing.JFrame {
     }
     //metodo para salvar procedimento na base de dados
     public void salvarProcedimento() {
-        Procedimento pro = new Procedimento(WIDTH, null);
+        ProcedimentoDTO pro = new ProcedimentoDTO(WIDTH, null);
         pro.setNome(txtNomeProcedimento.getText().trim());
 
         CadastroControlImpl controlPro = new CadastroControlImpl();

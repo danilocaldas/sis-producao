@@ -4,14 +4,16 @@
  */
 package br.com.sisproducao.control;
 
-import br.com.sisproducao.model.CadastroProducao;
+import br.com.sisproducao.model.CadastroProducaoDTO;
+import java.util.List;
 
 /**
  *
  * @author Danilo
  */
 public interface CadastroProducaoControl {
-    public void save(CadastroProducao cadProducao);
-    public void delete(CadastroProducao cadProducao);
-    public void update(CadastroProducao cadProducao);
+    public void save(CadastroProducaoDTO cadProducao);
+    public void delete(CadastroProducaoDTO cadProducao);
+    public void update(CadastroProducaoDTO cadProducao);
+    public List<CadastroProducaoDTO> listar_producao();
 }

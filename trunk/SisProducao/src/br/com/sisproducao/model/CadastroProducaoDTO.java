@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author Danilo
  */
-public class CadastroProducao {
+public class CadastroProducaoDTO {
 
     private long id;
     private String prestadores;
@@ -20,7 +20,7 @@ public class CadastroProducao {
     private Date datadigitacao;
     private Integer quantidade;
 
-    public CadastroProducao(long id, String prestadores, String procedimentos, String profissionais, Date dataentrada, Date datadigitacao, Integer quantidade) {
+    public CadastroProducaoDTO(long id, String prestadores, String procedimentos, String profissionais, Date dataentrada, Date datadigitacao, Integer quantidade) {
         this.id = id;
         this.prestadores = prestadores;
         this.procedimentos = procedimentos;
