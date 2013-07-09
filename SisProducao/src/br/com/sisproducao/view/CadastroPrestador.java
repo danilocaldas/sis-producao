@@ -5,21 +5,22 @@ import br.com.sisproducao.model.Prestador;
 
 /**
  *
- * @author ritacosta
+ * @author Danilo
  */
 public class CadastroPrestador extends javax.swing.JFrame {
 
     public CadastroPrestador() {
         initComponents();
     }
-
+    //metodo para salvar prestador na base de dados
     public void salvarPrestador() {
+        //pegando valor do campo de texto
         Prestador pres = new Prestador(WIDTH, null);
         pres.setNome(txtNomePrestador.getText().trim());
-
+       
         CadastroControlImpl controlPres = new CadastroControlImpl();
         controlPres.save(pres);
-    }
+    }//fim
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,11 +109,11 @@ public class CadastroPrestador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        salvarPrestador();
+        salvarPrestador();//ação do botão salvar
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
-        dispose();
+        dispose();//ação do botão finalizar (fecha janela)
     }//GEN-LAST:event_btFinalizarActionPerformed
 
     /**

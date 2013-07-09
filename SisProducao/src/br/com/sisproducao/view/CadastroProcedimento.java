@@ -5,14 +5,14 @@ import br.com.sisproducao.model.Procedimento;
 
 /**
  *
- * @author ritacosta
+ * @author Danilo
  */
 public class CadastroProcedimento extends javax.swing.JFrame {
 
     public CadastroProcedimento() {
         initComponents();
     }
-
+    //metodo para salvar procedimento na base de dados
     public void salvarProcedimento() {
         Procedimento pro = new Procedimento(WIDTH, null);
         pro.setNome(txtNomeProcedimento.getText().trim());
@@ -20,7 +20,7 @@ public class CadastroProcedimento extends javax.swing.JFrame {
         CadastroControlImpl controlPro = new CadastroControlImpl();
         controlPro.save(pro);
 
-    }
+    }//fim
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -109,11 +109,11 @@ public class CadastroProcedimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        salvarProcedimento();
+        salvarProcedimento();//ação do botão salvar
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
-        dispose();
+        dispose();//ação do botão finalizar(fecha janela)
     }//GEN-LAST:event_btFinalizarActionPerformed
 
     /**
