@@ -16,22 +16,27 @@ public class SisProducao extends javax.swing.JFrame {
     public SisProducao() {
         initComponents();
     }
-
+    //metodo para abrir jframe do cadastro de prestador
     public void abrirCadPrestador() {
         CadastroPrestador cad_pres = new CadastroPrestador();
         cad_pres.setVisible(true);
-        
-    }
 
+    }//fim
+    //metodo para abrir jframe do cadastro de procedimento 
     public void abrirCadProcedimento() {
         CadastroProcedimento cad_pro = new CadastroProcedimento();
         cad_pro.setVisible(true);
-    }
-
+    }//fim
+    //metodo para abrir jframe do cadastro de profissional
     public void abrirCadProfissional() {
         CadastroProfissional cad_prof = new CadastroProfissional();
         cad_prof.setVisible(true);
-    }
+    }//fim
+    //metodo para abrir jframe do cadastro de producao
+    public void abrirCadProducao() {
+        CadastroProducao cad_prod = new CadastroProducao();
+        cad_prod.setVisible(true);
+    }//fim
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,6 +54,7 @@ public class SisProducao extends javax.swing.JFrame {
         jmiCadastroPrestador = new javax.swing.JMenuItem();
         jmiCadastroProcedimento = new javax.swing.JMenuItem();
         jmiCadastroProfissional = new javax.swing.JMenuItem();
+        jmiCadastroProducao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Controle de Produção - CMR");
@@ -96,6 +102,14 @@ public class SisProducao extends javax.swing.JFrame {
         });
         jMenu2.add(jmiCadastroProfissional);
 
+        jmiCadastroProducao.setText("Cadastro Produção");
+        jmiCadastroProducao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCadastroProducaoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiCadastroProducao);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -115,29 +129,33 @@ public class SisProducao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiCadastroPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroPrestadorActionPerformed
-        abrirCadPrestador();
+        abrirCadPrestador();//ação do menu Cadastro Prestador
     }//GEN-LAST:event_jmiCadastroPrestadorActionPerformed
 
     private void jmiCadastroProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroProcedimentoActionPerformed
-        abrirCadProcedimento();
+        abrirCadProcedimento();//ação do menu Cadastro Procedimento
     }//GEN-LAST:event_jmiCadastroProcedimentoActionPerformed
 
     private void jmiCadastroProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroProfissionalActionPerformed
-        abrirCadProfissional();
+        abrirCadProfissional();//ação do menu Cadastro Profissional
     }//GEN-LAST:event_jmiCadastroProfissionalActionPerformed
+
+    private void jmiCadastroProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroProducaoActionPerformed
+        abrirCadProducao();//ação do menu Cadastro Producao
+    }//GEN-LAST:event_jmiCadastroProducaoActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -167,6 +185,7 @@ public class SisProducao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem jmiCadastroPrestador;
     private javax.swing.JMenuItem jmiCadastroProcedimento;
+    private javax.swing.JMenuItem jmiCadastroProducao;
     private javax.swing.JMenuItem jmiCadastroProfissional;
     // End of variables declaration//GEN-END:variables
 }

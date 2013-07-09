@@ -5,21 +5,22 @@ import br.com.sisproducao.model.Profissional;
 
 /**
  *
- * @author ritacosta
+ * @author Danilo
  */
 public class CadastroProfissional extends javax.swing.JFrame {
 
     public CadastroProfissional() {
         initComponents();
     }
-
+    //metodo para salvar profissional na base de dados
     public void salvarProfissional() {
+        //pegando valor do campo de texto
         Profissional prof = new Profissional(WIDTH, null);
         prof.setNome(txtNomeProfissional.getText().trim());
 
         CadastroControlImpl controlProf = new CadastroControlImpl();
         controlProf.save(prof);
-    }
+    }//fim
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,11 +109,11 @@ public class CadastroProfissional extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        salvarProfissional();
+        salvarProfissional();//ação do botão salvar
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
-        dispose();
+        dispose();//ação do botão finalizar(fechar janela)
     }//GEN-LAST:event_btFinalizarActionPerformed
 
     /**
