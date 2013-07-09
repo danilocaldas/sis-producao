@@ -7,6 +7,7 @@ package br.com.sisproducao.control;
 import br.com.sisproducao.model.Prestador;
 import br.com.sisproducao.model.Procedimento;
 import br.com.sisproducao.model.Profissional;
+import java.util.List;
 
 /**
  *
@@ -17,12 +18,15 @@ public interface CadastroControl {
     public void save (Prestador prestador);
     public void delete(Prestador prestador);
     public void update(Prestador prestador);
+    public List<Prestador> lista_prestador(String nome, int id); 
     
     public void save (Procedimento procedimento);
     public void delete(Procedimento procedimento);
     public void update(Procedimento procedimento);
+    public List<Procedimento> lista_procedimento(String nome, int id);
     
     public void save (Profissional profissional);
     public void delete(Profissional profissional);
     public void update(Profissional profissional);
+    public List<Profissional> lista_profissional(String nome , int id);
 }
