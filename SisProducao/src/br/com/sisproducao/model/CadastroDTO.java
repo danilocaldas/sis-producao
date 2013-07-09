@@ -9,12 +9,12 @@ package br.com.sisproducao.model;
  *
  * @author Danilo
  */
-public class Cadastro {
+public class CadastroDTO {
    
     private int id;
     private String nome;
     
-    public Cadastro(int id, String nome) {
+    public CadastroDTO(int id, String nome) {
         this.id = id;
         this.nome = nome;
     }

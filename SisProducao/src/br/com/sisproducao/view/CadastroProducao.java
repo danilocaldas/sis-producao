@@ -5,28 +5,105 @@
 package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
-import br.com.sisproducao.model.Prestador;
+import br.com.sisproducao.control.CadastroProducaoControlImpl;
+import br.com.sisproducao.model.CadastroProducaoDTO;
+import br.com.sisproducao.model.PrestadorDTO;
+import br.com.sisproducao.model.ProcedimentoDTO;
+import br.com.sisproducao.model.ProfissionalDTO;
+import java.sql.Date;
+import java.text.NumberFormat;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFormattedTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Danilo
  */
 public class CadastroProducao extends javax.swing.JFrame {
-    List<Prestador> prestador;
+    
+    DefaultTableModel tmProducao = new DefaultTableModel(null, new String[] {"Profissional", "Prestador"
+        ,"Procedimento", "Entrada", "Digitação", "Quantidade"});
+    //listas do comboBox
+    List<PrestadorDTO> prestador;
+    List<ProcedimentoDTO> procedimento;
+    List<ProfissionalDTO> profissional;
+    //fim
+    //lista antes da inclusão
+    List<CadastroProducaoDTO> producoes = new ArrayList<CadastroProducaoDTO>();
+    //fim
     
     /**
-     * Creates new form CadastroProducao
+     * Creates new form CadastroProducaoDTO
      */
     public CadastroProducao() {
         initComponents();
+        //inicializando as listas dos comboBox
+        listarPrestadores();
+        listarProfissionais();
+        listarProcedimentos();
+    }
+    CadastroControlImpl cad = new CadastroControlImpl();
+    
+    public final void listarPrestadores(){
+        prestador = cad.lista_prestador("%%", WIDTH);
+        cbPrestador.removeAllItems();
+        for(int i = 0; i < prestador.size(); i++){
+            cbPrestador.addItem(prestador.get(i).getNome());
+        }
     }
     
-    public void listarPrestadores(){
-        CadastroControlImpl cad = new CadastroControlImpl();
-        
+    public final void listarProfissionais(){
+        profissional = cad.lista_profissional("%%", WIDTH);
+        cbProfissional.removeAllItems();
+        for(int i = 0; i< profissional.size(); i++){
+            cbProfissional.addItem(profissional.get(i).getNome());
+        }
+    }
+    public final void listarProcedimentos(){
+        procedimento = cad.lista_procedimento("%%", WIDTH);
+        cdProcedimento.removeAllItems();
+        for(int i = 0; i < procedimento.size(); i++){
+            cdProcedimento.addItem(procedimento.get(i).getNome());
+        }
+    }
+    
+    public void incluirProducao(){
+        //convertendo as datas que serão usadas
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dataEntrada = (java.util.Date) jDateChooserDataEntrada.getDate();
+        java.util.Date dataDigitacao = (java.util.Date) jDateChooserDataDigitacao.getDate();
+        //pegando os valores dos campos para inclusão no array
+        CadastroProducaoDTO cad_pro = new CadastroProducaoDTO(WIDTH, null, null, null, dataEntrada, dataDigitacao, WIDTH);
+        cad_pro.setProfissionais(cbProfissional.getSelectedItem().toString());
+        cad_pro.setPrestadores(cbPrestador.getSelectedItem().toString());
+        cad_pro.setProcedimentos(cdProcedimento.getSelectedItem().toString());
+        cad_pro.setDataentrada(Date.valueOf(formato.format(dataEntrada)));
+        cad_pro.setDatadigitacao(Date.valueOf(formato.format(dataDigitacao)));
+        cad_pro.setQuantidade(Integer.parseInt(String.valueOf(jftxtQuantidade.getValue())));
+        producoes.add(cad_pro);
+        //contruindo o array da lista de produção
+        String profissionais = cbProfissional.getSelectedItem().toString();
+        String prestadores = cbPrestador.getSelectedItem().toString();
+        String procedimentos = cdProcedimento.getSelectedItem().toString();
+        String data_entrada = String.valueOf(formato.format(dataEntrada));
+        String data_digitacao = String.valueOf(formato.format(dataDigitacao));
+        String quantidade = String.valueOf(jftxtQuantidade.getValue());
+        String [] campos =  new String[]{profissionais, prestadores, procedimentos, data_entrada, data_digitacao, quantidade};
+        tmProducao.addRow(campos);
+        //fim do array
     }
 
+    public void salvarProducao(){
+        CadastroProducaoControlImpl cad = new CadastroProducaoControlImpl();
+        for(int i = 0; i < producoes.size(); i++){
+            cad.save(producoes.get(i));
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,25 +117,25 @@ public class CadastroProducao extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         cbProfissional = new javax.swing.JComboBox();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooserDataEntrada = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cbPrestador = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooserDataDigitacao = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         cdProcedimento = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jftxtQuantidade = new JFormattedTextField(NumberFormat.getNumberInstance());
+        btIncluir = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btNovo = new javax.swing.JButton();
+        btSalvar = new javax.swing.JButton();
+        btCancelar = new javax.swing.JButton();
+        btFinalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro");
@@ -99,22 +176,23 @@ public class CadastroProducao extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDateChooserDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooserDataDigitacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cdProcedimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
-                                    .addGap(63, 63, 63))))))
+                                    .addGap(63, 63, 63)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jftxtQuantidade, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,46 +220,46 @@ public class CadastroProducao extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDateChooserDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDateChooserDataDigitacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jftxtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbPrestador, cbProfissional, cdProcedimento});
 
-        jButton1.setText("Incluir");
+        btIncluir.setText("Incluir");
+        btIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btIncluirActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Excluir");
+        btExcluir.setText("Excluir");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pré-Visualização da sua produção"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(tmProducao);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton3.setText("Novo");
+        btNovo.setText("Novo");
 
-        jButton4.setText("Salvar");
+        btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Cancelar");
+        btCancelar.setText("Cancelar");
 
-        jButton6.setText("Finalizar");
+        btFinalizar.setText("Finalizar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -192,17 +270,17 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btSalvar)
                         .addGap(14, 14, 14)
-                        .addComponent(jButton5)
+                        .addComponent(btCancelar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6)))
+                        .addComponent(btFinalizar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton3, jButton4, jButton5, jButton6});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btFinalizar, btNovo, btSalvar});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,10 +288,10 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(btNovo)
+                    .addComponent(btSalvar)
+                    .addComponent(btCancelar)
+                    .addComponent(btFinalizar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,14 +304,14 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btExcluir, btIncluir});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,8 +320,8 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btIncluir)
+                    .addComponent(btExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -268,6 +346,14 @@ public class CadastroProducao extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
+        incluirProducao();
+    }//GEN-LAST:event_btIncluirActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        salvarProducao();
+    }//GEN-LAST:event_btSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,17 +390,17 @@ public class CadastroProducao extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCancelar;
+    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btFinalizar;
+    private javax.swing.JButton btIncluir;
+    private javax.swing.JButton btNovo;
+    private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox cbPrestador;
     private javax.swing.JComboBox cbProfissional;
     private javax.swing.JComboBox cdProcedimento;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooserDataDigitacao;
+    private com.toedter.calendar.JDateChooser jDateChooserDataEntrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -326,6 +412,6 @@ public class CadastroProducao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JFormattedTextField jftxtQuantidade;
     // End of variables declaration//GEN-END:variables
 }

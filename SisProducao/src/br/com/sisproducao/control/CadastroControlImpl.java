@@ -5,9 +5,9 @@
 package br.com.sisproducao.control;
 
 import br.com.sisproducao.fabricadeconexao.ConnectionFactoryMysql;
-import br.com.sisproducao.model.Prestador;
-import br.com.sisproducao.model.Procedimento;
-import br.com.sisproducao.model.Profissional;
+import br.com.sisproducao.model.PrestadorDTO;
+import br.com.sisproducao.model.ProcedimentoDTO;
+import br.com.sisproducao.model.ProfissionalDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ public class CadastroControlImpl implements CadastroControl {
     ResultSet rs;
 
     @Override
-    public void save(Prestador prestador) {
+    public void save(PrestadorDTO prestador) {
         try {
             pstm = bd.conectar().prepareCall(sql.savePrestadores);
             pstm.setString(1, prestador.getNome());
@@ -41,17 +41,17 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public void delete(Prestador prestador) {
+    public void delete(PrestadorDTO prestador) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Prestador prestador) {
+    public void update(PrestadorDTO prestador) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(Procedimento procedimento) {
+    public void save(ProcedimentoDTO procedimento) {
         try {
             pstm = bd.conectar().prepareCall(sql.saveProcedimentos);
             pstm.setString(1, procedimento.getNome());
@@ -63,17 +63,17 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public void delete(Procedimento procedimento) {
+    public void delete(ProcedimentoDTO procedimento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Procedimento procedimento) {
+    public void update(ProcedimentoDTO procedimento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(Profissional profissional) {
+    public void save(ProfissionalDTO profissional) {
         try {
             pstm = bd.conectar().prepareStatement(sql.saveProfissionais);
             pstm.setString(1, profissional.getNome());
@@ -85,25 +85,25 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public void delete(Profissional profissional) {
+    public void delete(ProfissionalDTO profissional) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Profissional profissional) {
+    public void update(ProfissionalDTO profissional) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Prestador> lista_prestador(String nome, int id) {
-        List<Prestador> prestadores = new ArrayList();
+    public List<PrestadorDTO> lista_prestador(String nome, int id) {
+        List<PrestadorDTO> prestadores = new ArrayList();
         try {
             pstm = bd.conectar().prepareStatement(sql.selectPrestadores);
             pstm.setString(1, nome);
             rs = pstm.executeQuery();
-            Prestador pre;
+            PrestadorDTO pre;
             while (rs.next()) {
-                pre = new Prestador(id, nome);
+                pre = new PrestadorDTO(id, nome);
                 pre.setNome(rs.getString("nome"));
                 prestadores.add(pre);
             }
@@ -114,15 +114,15 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public List<Procedimento> lista_procedimento(String nome, int id) {
-        List<Procedimento> procedimentos = new ArrayList();
+    public List<ProcedimentoDTO> lista_procedimento(String nome, int id) {
+        List<ProcedimentoDTO> procedimentos = new ArrayList();
         try {
             pstm = bd.conectar().prepareStatement(sql.selectProcedimentos);
             pstm.setString(1, nome);
             rs = pstm.executeQuery();
-            Procedimento proc;
+            ProcedimentoDTO proc;
             while (rs.next()) {
-                proc = new Procedimento(id, nome);
+                proc = new ProcedimentoDTO(id, nome);
                 proc.setNome(rs.getString("nome"));
                 procedimentos.add(proc);
             }
@@ -134,15 +134,15 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public List<Profissional> lista_profissional(String nome, int id) {
-        List<Profissional> profissionais = new ArrayList();
+    public List<ProfissionalDTO> lista_profissional(String nome, int id) {
+        List<ProfissionalDTO> profissionais = new ArrayList();
         try {
             pstm = bd.conectar().prepareStatement(sql.selectProfissionais);
             pstm.setString(1, nome);
             rs = pstm.executeQuery();
-            Profissional pro;
+            ProfissionalDTO pro;
             while (rs.next()) {
-                pro = new Profissional(id, nome);
+                pro = new ProfissionalDTO(id, nome);
                 pro.setNome(rs.getString("nome"));
                 profissionais.add(pro);
             }

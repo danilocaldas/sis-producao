@@ -1,7 +1,7 @@
 package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
-import br.com.sisproducao.model.Prestador;
+import br.com.sisproducao.model.PrestadorDTO;
 
 /**
  *
@@ -15,7 +15,7 @@ public class CadastroPrestador extends javax.swing.JFrame {
     //metodo para salvar prestador na base de dados
     public void salvarPrestador() {
         //pegando valor do campo de texto
-        Prestador pres = new Prestador(WIDTH, null);
+        PrestadorDTO pres = new PrestadorDTO(WIDTH, null);
         pres.setNome(txtNomePrestador.getText().trim());
        
         CadastroControlImpl controlPres = new CadastroControlImpl();

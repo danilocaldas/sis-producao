@@ -9,9 +9,9 @@ package br.com.sisproducao.model;
  *
  * @author Danilo
  */
-public class Procedimento extends Cadastro{
+public class ProfissionalDTO extends CadastroDTO{
 
-    public Procedimento(int id, String nome) {
+    public ProfissionalDTO(int id, String nome) {
         super(id, nome);
     }
     

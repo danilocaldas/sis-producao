@@ -1,7 +1,7 @@
 package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
-import br.com.sisproducao.model.Profissional;
+import br.com.sisproducao.model.ProfissionalDTO;
 
 /**
  *
@@ -15,7 +15,7 @@ public class CadastroProfissional extends javax.swing.JFrame {
     //metodo para salvar profissional na base de dados
     public void salvarProfissional() {
         //pegando valor do campo de texto
-        Profissional prof = new Profissional(WIDTH, null);
+        ProfissionalDTO prof = new ProfissionalDTO(WIDTH, null);
         prof.setNome(txtNomeProfissional.getText().trim());
 
         CadastroControlImpl controlProf = new CadastroControlImpl();

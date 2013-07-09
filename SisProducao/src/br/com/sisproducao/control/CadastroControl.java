@@ -4,9 +4,9 @@
  */
 package br.com.sisproducao.control;
 
-import br.com.sisproducao.model.Prestador;
-import br.com.sisproducao.model.Procedimento;
-import br.com.sisproducao.model.Profissional;
+import br.com.sisproducao.model.PrestadorDTO;
+import br.com.sisproducao.model.ProcedimentoDTO;
+import br.com.sisproducao.model.ProfissionalDTO;
 import java.util.List;
 
 /**
@@ -14,19 +14,19 @@ import java.util.List;
  * @author Danilo
  */
 public interface CadastroControl {
-   
-    public void save (Prestador prestador);
-    public void delete(Prestador prestador);
-    public void update(Prestador prestador);
-    public List<Prestador> lista_prestador(String nome, int id); 
-    
-    public void save (Procedimento procedimento);
-    public void delete(Procedimento procedimento);
-    public void update(Procedimento procedimento);
-    public List<Procedimento> lista_procedimento(String nome, int id);
-    
-    public void save (Profissional profissional);
-    public void delete(Profissional profissional);
-    public void update(Profissional profissional);
-    public List<Profissional> lista_profissional(String nome , int id);
+   //crud prestador
+    public void save (PrestadorDTO prestador);
+    public void delete(PrestadorDTO prestador);
+    public void update(PrestadorDTO prestador);
+    public List<PrestadorDTO> lista_prestador(String nome, int id); 
+    //crud procedimento
+    public void save (ProcedimentoDTO procedimento);
+    public void delete(ProcedimentoDTO procedimento);
+    public void update(ProcedimentoDTO procedimento);
+    public List<ProcedimentoDTO> lista_procedimento(String nome, int id);
+    //crud profissional
+    public void save (ProfissionalDTO profissional);
+    public void delete(ProfissionalDTO profissional);
+    public void update(ProfissionalDTO profissional);
+    public List<ProfissionalDTO> lista_profissional(String nome , int id);
 }
