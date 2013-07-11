@@ -45,9 +45,13 @@ public class CadastroProducao extends javax.swing.JFrame {
         listarPrestadores();
         listarProfissionais();
         listarProcedimentos();
+        
     }
     CadastroControlImpl cad = new CadastroControlImpl();
-    
+     
+    /**
+     * Inicia a lista de prestadores dentro do Combo BOX
+     */ 
     public final void listarPrestadores(){
         prestador = cad.lista_prestador("%%", WIDTH);
         cbPrestador.removeAllItems();
@@ -55,15 +59,19 @@ public class CadastroProducao extends javax.swing.JFrame {
             cbPrestador.addItem(prestador.get(i).getNome());
         }
     }
-    
+     /**
+     * Inicia a lista de profissionais dentro do Combo BOX
+     */
     public final void listarProfissionais(){
-        profissional = cad.lista_profissional("%%", WIDTH);
+        profissional = cad.lista_profissional("%%", WIDTH, null);
         cbProfissional.removeAllItems();
         for(int i = 0; i< profissional.size(); i++){
             cbProfissional.addItem(profissional.get(i).getNome());
         }
     }
-
+    /**
+     * Inicia a lista de procedimentos dentro do Combo BOX
+     */
     public final void listarProcedimentos(){
         procedimento = cad.lista_procedimento("%%", WIDTH);
         cdProcedimento.removeAllItems();
@@ -71,7 +79,9 @@ public class CadastroProducao extends javax.swing.JFrame {
             cdProcedimento.addItem(procedimento.get(i).getNome());
         }
     }
-    
+    /**
+     * Inclui dados na tabela para posterior gravação na Base de Dados
+     */
     public void incluirProducao(){
         //convertendo as datas que serão usadas
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -99,17 +109,22 @@ public class CadastroProducao extends javax.swing.JFrame {
         tmProducao.addRow(campos);
         //fim
     }
-
+    
+    /**
+     * salvar a producao na base de dados
+     */
     public void salvarProducao(){
         CadastroProducaoControlImpl cad = new CadastroProducaoControlImpl();
         for(int i = 0; i < producoes.size(); i++){
             cad.save(producoes.get(i));
         }
     }
-    
+    /**
+     * Remove Linhas da tabela
+     */
     public void removerLinhasProducao(){
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
-        if(jTable1.getSelectedRow() > 0 ){
+        if(jTable1.getSelectedRow() >= 0 ){
             dtm.removeRow(jTable1.getSelectedRow());
             jTable1.setModel(dtm);
         }else{
@@ -278,6 +293,11 @@ public class CadastroProducao extends javax.swing.JFrame {
         btCancelar.setText("Cancelar");
 
         btFinalizar.setText("Finalizar");
+        btFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFinalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -362,7 +382,8 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-514)/2, (screenSize.height-492)/2, 514, 492);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
@@ -376,6 +397,10 @@ public class CadastroProducao extends javax.swing.JFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         removerLinhasProducao();
     }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btFinalizarActionPerformed
 
     /**
      * @param args the command line arguments

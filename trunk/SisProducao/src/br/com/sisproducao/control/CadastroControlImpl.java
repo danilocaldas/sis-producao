@@ -77,6 +77,7 @@ public class CadastroControlImpl implements CadastroControl {
         try {
             pstm = bd.conectar().prepareStatement(sql.saveProfissionais);
             pstm.setString(1, profissional.getNome());
+            pstm.setString(2, profissional.getSenha());
             pstm.executeUpdate();
             bd.desconectar();
         } catch (SQLException ex) {
@@ -134,7 +135,7 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public List<ProfissionalDTO> lista_profissional(String nome, int id) {
+    public List<ProfissionalDTO> lista_profissional(String nome, int id, String senha) {
         List<ProfissionalDTO> profissionais = new ArrayList();
         try {
             pstm = bd.conectar().prepareStatement(sql.selectProfissionais);
@@ -142,7 +143,7 @@ public class CadastroControlImpl implements CadastroControl {
             rs = pstm.executeQuery();
             ProfissionalDTO pro;
             while (rs.next()) {
-                pro = new ProfissionalDTO(id, nome);
+                pro = new ProfissionalDTO(id, nome, senha);
                 pro.setNome(rs.getString("nome"));
                 profissionais.add(pro);
             }

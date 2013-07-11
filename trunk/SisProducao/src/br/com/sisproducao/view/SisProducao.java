@@ -37,7 +37,21 @@ public class SisProducao extends javax.swing.JFrame {
         CadastroProducao cad_prod = new CadastroProducao();
         cad_prod.setVisible(true);
     }//fim
-
+    
+    public void abrirPesquisaPrestador(){
+        PesquisaPrestador pes_pres = new PesquisaPrestador();
+        pes_pres.setVisible(true);
+    }
+    
+    public void abrirPesquisaProcedimento(){
+        PesquisaProcedimento pes_pro = new PesquisaProcedimento();
+        pes_pro.setVisible(true);
+    }
+    
+    public void abrirPesquisaProfissional(){
+        PesquisaProfissional pes_prof = new PesquisaProfissional();
+        pes_prof.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,6 +69,10 @@ public class SisProducao extends javax.swing.JFrame {
         jmiCadastroProcedimento = new javax.swing.JMenuItem();
         jmiCadastroProfissional = new javax.swing.JMenuItem();
         jmiCadastroProducao = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jmiPesquisaPrestador = new javax.swing.JMenuItem();
+        jmiPesquisaProcedimento = new javax.swing.JMenuItem();
+        jmiPesquisaProfissional = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Controle de Produção - CMR");
@@ -112,6 +130,34 @@ public class SisProducao extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Pesquisas");
+
+        jmiPesquisaPrestador.setText("Prestador");
+        jmiPesquisaPrestador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPesquisaPrestadorActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiPesquisaPrestador);
+
+        jmiPesquisaProcedimento.setText("Procedimento");
+        jmiPesquisaProcedimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPesquisaProcedimentoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiPesquisaProcedimento);
+
+        jmiPesquisaProfissional.setText("Profissional");
+        jmiPesquisaProfissional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPesquisaProfissionalActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiPesquisaProfissional);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,7 +171,8 @@ public class SisProducao extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-503)/2, (screenSize.height-387)/2, 503, 387);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiCadastroPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroPrestadorActionPerformed
@@ -143,6 +190,18 @@ public class SisProducao extends javax.swing.JFrame {
     private void jmiCadastroProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroProducaoActionPerformed
         abrirCadProducao();//ação do menu Cadastro Producao
     }//GEN-LAST:event_jmiCadastroProducaoActionPerformed
+
+    private void jmiPesquisaPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaPrestadorActionPerformed
+       abrirPesquisaPrestador();//ação do menu Pesquisa Prestador
+    }//GEN-LAST:event_jmiPesquisaPrestadorActionPerformed
+
+    private void jmiPesquisaProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaProcedimentoActionPerformed
+       abrirPesquisaProcedimento();
+    }//GEN-LAST:event_jmiPesquisaProcedimentoActionPerformed
+
+    private void jmiPesquisaProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaProfissionalActionPerformed
+        abrirPesquisaProfissional();
+    }//GEN-LAST:event_jmiPesquisaProfissionalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,11 +240,15 @@ public class SisProducao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem jmiCadastroPrestador;
     private javax.swing.JMenuItem jmiCadastroProcedimento;
     private javax.swing.JMenuItem jmiCadastroProducao;
     private javax.swing.JMenuItem jmiCadastroProfissional;
+    private javax.swing.JMenuItem jmiPesquisaPrestador;
+    private javax.swing.JMenuItem jmiPesquisaProcedimento;
+    private javax.swing.JMenuItem jmiPesquisaProfissional;
     // End of variables declaration//GEN-END:variables
 }
