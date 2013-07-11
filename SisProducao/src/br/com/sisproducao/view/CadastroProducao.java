@@ -12,11 +12,11 @@ import br.com.sisproducao.model.ProcedimentoDTO;
 import br.com.sisproducao.model.ProfissionalDTO;
 import java.sql.Date;
 import java.text.NumberFormat;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -63,6 +63,7 @@ public class CadastroProducao extends javax.swing.JFrame {
             cbProfissional.addItem(profissional.get(i).getNome());
         }
     }
+
     public final void listarProcedimentos(){
         procedimento = cad.lista_procedimento("%%", WIDTH);
         cdProcedimento.removeAllItems();
@@ -93,14 +94,26 @@ public class CadastroProducao extends javax.swing.JFrame {
         String data_digitacao = String.valueOf(formato.format(dataDigitacao));
         String quantidade = String.valueOf(jftxtQuantidade.getValue());
         String [] campos =  new String[]{profissionais, prestadores, procedimentos, data_entrada, data_digitacao, quantidade};
-        tmProducao.addRow(campos);
         //fim do array
+        //adicionando linhas a tabela
+        tmProducao.addRow(campos);
+        //fim
     }
 
     public void salvarProducao(){
         CadastroProducaoControlImpl cad = new CadastroProducaoControlImpl();
         for(int i = 0; i < producoes.size(); i++){
             cad.save(producoes.get(i));
+        }
+    }
+    
+    public void removerLinhasProducao(){
+        DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
+        if(jTable1.getSelectedRow() > 0 ){
+            dtm.removeRow(jTable1.getSelectedRow());
+            jTable1.setModel(dtm);
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor Selecionar um registro!");
         }
     }
     
@@ -242,6 +255,11 @@ public class CadastroProducao extends javax.swing.JFrame {
         });
 
         btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pré-Visualização da sua produção"));
 
@@ -354,6 +372,10 @@ public class CadastroProducao extends javax.swing.JFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         salvarProducao();
     }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        removerLinhasProducao();
+    }//GEN-LAST:event_btExcluirActionPerformed
 
     /**
      * @param args the command line arguments
