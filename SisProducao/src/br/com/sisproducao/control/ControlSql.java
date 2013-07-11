@@ -10,7 +10,7 @@ package br.com.sisproducao.control;
  */
 public class ControlSql {
     String saveProcedimentos = "INSERT INTO PROCEDIMENTOS (NOME) VALUES (?)";
-    String saveProfissionais = "INSERT INTO PROFISSIONAIS (NOME) VALUES (?)";
+    String saveProfissionais = "INSERT INTO PROFISSIONAIS (NOME, SENHA) VALUES (?, ?)";
     String savePrestadores = "INSERT INTO PRESTADORES (NOME) VALUES (?)";
     
     String selectProcedimentos = "SELECT * FROM PROCEDIMENTOS WHERE NOME LIKE ?";

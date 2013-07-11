@@ -28,5 +28,5 @@ public interface CadastroControl {
     public void save (ProfissionalDTO profissional);
     public void delete(ProfissionalDTO profissional);
     public void update(ProfissionalDTO profissional);
-    public List<ProfissionalDTO> lista_profissional(String nome , int id);
+    public List<ProfissionalDTO> lista_profissional(String nome , int id, String senha);
 }
