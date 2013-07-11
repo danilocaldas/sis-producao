@@ -238,11 +238,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Finalizar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btFinalizarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btNovo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Novo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNovoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
