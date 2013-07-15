@@ -4,6 +4,14 @@
  */
 package br.com.sisproducao.view;
 
+import br.com.sisproducao.control.CadastroControlImpl;
+import br.com.sisproducao.model.PrestadorDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -11,13 +19,67 @@ import javax.swing.table.DefaultTableModel;
  * @author ritacosta
  */
 public class PesquisaPrestador extends javax.swing.JFrame {
-    DefaultTableModel tmPrestador = new DefaultTableModel();
+
+    DefaultTableModel tmPrestador = new DefaultTableModel(null, new String[]{"id", "nome"});
+    List<PrestadorDTO> prestadores;
+    ListSelectionModel lsmPrestadores;
+    String tipoCadastro;
+
     /**
      * Creates new form PesquisaPrestador
      */
     public PesquisaPrestador() {
         initComponents();
     }
+
+    private void pesquisaPrestador() {
+        CadastroControlImpl cad = new CadastroControlImpl();
+        prestadores = cad.lista_prestador("%" + txtNome.getText().trim() + "%", WIDTH);
+        mostrarPrestadores(prestadores);
+    }
+
+    private void mostrarPrestadores(List<PrestadorDTO> prestadores) {
+        while (tmPrestador.getRowCount() > 0) {
+            tmPrestador.removeRow(0);
+        }
+        if (prestadores.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro");
+        } else {
+            String[] campos = new String[]{null, null};
+            for (int i = 0; i < prestadores.size(); i++) {
+                tmPrestador.addRow(campos);
+                tmPrestador.setValueAt(prestadores.get(i).getId(), i, 0);
+                tmPrestador.setValueAt(prestadores.get(i).getNome(), i, 1);
+            }
+        }
+    }
+
+    private void tbPrestadorLinhaSelecionada(JTable tb) {
+        if (tb.getSelectedRow() != -1) {
+            txtId.setText(String.valueOf(prestadores.get(tb.getSelectedRow()).getId()));
+            txtNome.setText(prestadores.get(tb.getSelectedRow()).getNome());
+        } else {
+            txtId.setText("");
+            txtNome.setText("");
+        }
+    }
+    
+    private void alteraPrestador(){
+        if(tbPrestador.getSelectedRow() != -1){
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione um registro!");
+        }
+    }
+    
+    private void alterarPrestador(){
+        PrestadorDTO pres = new PrestadorDTO(WIDTH, null);
+        pres.setId(prestadores.get(tbPrestador.getSelectedRow()).getId());
+        pres.setNome(txtNome.getText().trim());
+        CadastroControlImpl cad = new CadastroControlImpl();
+        cad.update(pres);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,7 +99,7 @@ public class PesquisaPrestador extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbPrestador = new javax.swing.JTable();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btFinalizar = new javax.swing.JButton();
@@ -54,6 +116,11 @@ public class PesquisaPrestador extends javax.swing.JFrame {
         jLabel1.setText("Id:");
 
         btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -93,8 +160,17 @@ public class PesquisaPrestador extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Prestadores"));
 
-        jTable1.setModel(tmPrestador);
-        jScrollPane1.setViewportView(jTable1);
+        tbPrestador.setModel(tmPrestador);
+        tbPrestador.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmPrestadores = tbPrestador.getSelectionModel();
+        lsmPrestadores.addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                if (! e.getValueIsAdjusting()){
+                    tbPrestadorLinhaSelecionada(tbPrestador);
+                }
+            }
+        });
+        jScrollPane1.setViewportView(tbPrestador);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -113,6 +189,11 @@ public class PesquisaPrestador extends javax.swing.JFrame {
         );
 
         btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
 
@@ -186,8 +267,8 @@ public class PesquisaPrestador extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-500)/2, (screenSize.height-320)/2, 500, 320);
+        setSize(new java.awt.Dimension(500, 320));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -198,6 +279,14 @@ public class PesquisaPrestador extends javax.swing.JFrame {
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
         dispose();
     }//GEN-LAST:event_btFinalizarActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        pesquisaPrestador();
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        alterarPrestador();
+    }//GEN-LAST:event_btAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,7 +334,7 @@ public class PesquisaPrestador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbPrestador;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

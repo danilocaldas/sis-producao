@@ -17,6 +17,10 @@ public class ControlSql {
     String selectProfissionais = "SELECT * FROM PROFISSIONAIS WHERE NOME LIKE ?";
     String selectPrestadores = "SELECT * FROM PRESTADORES WHERE NOME LIKE ?";
     
+    String updateProcedimentos = "UPDATE PROCEDIMENTOS SET NOME = ? WHERE ID = ?";
+    String updateProfissionais = "UPDATE PROFISSIONAIS SET NOME = ?, SENHA = ? WHERE ID = ?";
+    String updatePrestadores = "UPDATE PRESTADORES SET NOME = ? WHERE ID = ?";
+    
     String saveProducao = "INSERT INTO PRODUCAO (PRESTADORES, PROCEDIMENTOS,"
             + " PROFISSIONAIS, DATAENTRADA, DATADIGITACAO, QUANTIDADE) VALUES (?, ?, ?, ?, ?, ?)";
 }

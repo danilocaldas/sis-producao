@@ -45,7 +45,16 @@ public class CadastroControlImpl implements CadastroControl {
 
     @Override
     public void update(PrestadorDTO prestador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            pstm = bd.conectar().prepareStatement(sql.updatePrestadores);
+            pstm.setString(1, prestador.getNome());
+            pstm.setInt(2, prestador.getId());
+            pstm.executeUpdate();
+            bd.desconectar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel concluir a alteraração do prestador!" + ex);
+        }
+
     }
 
     @Override
@@ -67,7 +76,15 @@ public class CadastroControlImpl implements CadastroControl {
 
     @Override
     public void update(ProcedimentoDTO procedimento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            pstm = bd.conectar().prepareStatement(sql.updateProcedimentos);
+            pstm.setString(1, procedimento.getNome());
+            pstm.setInt(2, procedimento.getId());
+            pstm.executeUpdate();
+            bd.desconectar();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel alterar o prestador!" + e);
+        }
     }
 
     @Override
@@ -90,7 +107,16 @@ public class CadastroControlImpl implements CadastroControl {
 
     @Override
     public void update(ProfissionalDTO profissional) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            pstm = bd.conectar().prepareStatement(sql.updateProfissionais);
+            pstm.setString(1, profissional.getNome());
+            pstm.setString(2, profissional.getSenha());
+            pstm.setInt(3, profissional.getId());
+            pstm.executeUpdate();
+            bd.desconectar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel alterar o profissional!"+ex);
+        }
     }
 
     @Override
@@ -103,6 +129,7 @@ public class CadastroControlImpl implements CadastroControl {
             PrestadorDTO pre;
             while (rs.next()) {
                 pre = new PrestadorDTO(id, nome);
+                pre.setId(rs.getInt("id"));
                 pre.setNome(rs.getString("nome"));
                 prestadores.add(pre);
             }
@@ -134,7 +161,7 @@ public class CadastroControlImpl implements CadastroControl {
     }
 
     @Override
-    public List<ProfissionalDTO> lista_profissional(String nome, int id, String senha) {
+    public List<ProfissionalDTO> lista_profissional(String nome, String senha, int id) {
         List<ProfissionalDTO> profissionais = new ArrayList();
         try {
             pstm = bd.conectar().prepareStatement(sql.selectProfissionais);
@@ -143,7 +170,9 @@ public class CadastroControlImpl implements CadastroControl {
             ProfissionalDTO pro;
             while (rs.next()) {
                 pro = new ProfissionalDTO(id, nome, senha);
+                pro.setId(rs.getInt("id"));
                 pro.setNome(rs.getString("nome"));
+                pro.setSenha(rs.getString("senha"));
                 profissionais.add(pro);
             }
         } catch (SQLException ex) {

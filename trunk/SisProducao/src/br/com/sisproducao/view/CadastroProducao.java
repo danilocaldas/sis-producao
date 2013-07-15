@@ -63,7 +63,7 @@ public class CadastroProducao extends javax.swing.JFrame {
      * Inicia a lista de profissionais dentro do Combo BOX
      */
     public final void listarProfissionais(){
-        profissional = cad.lista_profissional("%%", WIDTH, null);
+        profissional = cad.lista_profissional("%%", null, WIDTH);
         cbProfissional.removeAllItems();
         for(int i = 0; i< profissional.size(); i++){
             cbProfissional.addItem(profissional.get(i).getNome());

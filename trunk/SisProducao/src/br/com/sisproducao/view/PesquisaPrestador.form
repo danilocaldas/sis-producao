@@ -161,6 +161,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Pesquisar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btPesquisarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNome">
             </Component>
@@ -207,7 +210,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="tbPrestador">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="tmPrestador" type="code"/>
@@ -219,6 +222,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tbPrestador.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xd;&#xa;lsmPrestadores = tbPrestador.getSelectionModel();&#xd;&#xa;lsmPrestadores.addListSelectionListener(new ListSelectionListener(){&#xd;&#xa;    public void valueChanged(ListSelectionEvent e) {&#xd;&#xa;        if (! e.getValueIsAdjusting()){&#xd;&#xa;            tbPrestadorLinhaSelecionada(tbPrestador);&#xd;&#xa;}&#xd;&#xa;}&#xd;&#xa;});"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -228,6 +234,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Alterar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAlterarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btExcluir">
           <Properties>
