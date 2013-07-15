@@ -6,6 +6,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.ProfissionalDTO;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -19,31 +20,38 @@ import javax.swing.table.DefaultTableModel;
  * @author ritacosta
  */
 public class PesquisaProfissional extends javax.swing.JFrame {
-    DefaultTableModel tmProfissional = new DefaultTableModel(null, new String[] {"id", "nome", "senha"});
+    
+    DefaultTableModel tmProfissional = new DefaultTableModel(null, new String[]{"id", "nome", "senha"});
     List<ProfissionalDTO> profissionais;
     ListSelectionModel lsmProfissionais;
+    String tipoCadastro;
+    
+
     /**
      * Creates new form PesquisaPrestador
      */
     public PesquisaProfissional() {
         initComponents();
+        desabilitarCampos();
+        txtId.setEnabled(false);
+
     }
-    
-    private void pesquisarProfissionais(){
+
+    private void pesquisarProfissionais() {
         CadastroControlImpl cad = new CadastroControlImpl();
-        profissionais = cad.lista_profissional("%"+txtNome.getText().trim()+"%", null, WIDTH);
+        profissionais = cad.lista_profissional("%" + txtNome.getText().trim() + "%", null, WIDTH);
         mostrarProfissionais(profissionais);
     }
-    
-    private void mostrarProfissionais(List<ProfissionalDTO> profissionais){
-        while(tmProfissional.getRowCount() < 0){
+
+    private void mostrarProfissionais(List<ProfissionalDTO> profissionais) {
+        while (tmProfissional.getRowCount() < 0) {
             tmProfissional.removeRow(0);
         }
-        if(profissionais.size() == 0){
+        if (profissionais.size() == 0) {
             JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro!");
-        }else{
+        } else {
             String[] campos = new String[]{null, null, null};
-            for(int i = 0; i < profissionais.size(); i++){
+            for (int i = 0; i < profissionais.size(); i++) {
                 tmProfissional.addRow(campos);
                 tmProfissional.setValueAt(profissionais.get(i).getId(), i, 0);
                 tmProfissional.setValueAt(profissionais.get(i).getNome(), i, 1);
@@ -51,8 +59,8 @@ public class PesquisaProfissional extends javax.swing.JFrame {
             }
         }
     }
-    
-     private void tbProfissionalLinhaSelecionada(JTable tb) {
+
+    private void tbProfissionalLinhaSelecionada(JTable tb) {
         if (tb.getSelectedRow() != -1) {
             txtId.setText(String.valueOf(profissionais.get(tb.getSelectedRow()).getId()));
             txtNome.setText(profissionais.get(tb.getSelectedRow()).getNome());
@@ -63,16 +71,35 @@ public class PesquisaProfissional extends javax.swing.JFrame {
             ptxtSenha.setText("");
         }
     }
-     
-    private void alterarProfissional(){ 
+
+    private void alteraProfissional() {
+        if (tbProfissional.getSelectedRow() != -1) {
+            habilitarCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro!");
+        }
+    }
+
+    private void alterarProfissional() {
         ProfissionalDTO prof = new ProfissionalDTO(WIDTH, null, null);
         prof.setId(profissionais.get(tbProfissional.getSelectedRow()).getId());
         prof.setNome(txtNome.getText().trim());
         prof.setSenha(ptxtSenha.getText().trim());
         CadastroControlImpl cad = new CadastroControlImpl();
         cad.update(prof);
+        desabilitarCampos();
     }
-    
+
+    private void habilitarCampos() {
+        txtNome.setEnabled(true);
+        ptxtSenha.setEnabled(true);
+    }
+
+    private void desabilitarCampos() {
+        txtNome.setEnabled(false);
+        ptxtSenha.setEnabled(false);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +125,7 @@ public class PesquisaProfissional extends javax.swing.JFrame {
         btExcluir = new javax.swing.JButton();
         btFinalizar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
+        btSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa Profissional");
@@ -213,6 +241,13 @@ public class PesquisaProfissional extends javax.swing.JFrame {
             }
         });
 
+        btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -225,7 +260,9 @@ public class PesquisaProfissional extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btAlterar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btExcluir)
                         .addGap(18, 18, 18)
@@ -249,6 +286,8 @@ public class PesquisaProfissional extends javax.swing.JFrame {
                     .addComponent(btExcluir)
                     .addComponent(btFinalizar)
                     .addComponent(btNovo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btSalvar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -266,10 +305,10 @@ public class PesquisaProfissional extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(500, 320));
+        setSize(new java.awt.Dimension(500, 379));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -287,8 +326,13 @@ public class PesquisaProfissional extends javax.swing.JFrame {
     }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
-        alterarProfissional();
+        tipoCadastro = "alteracao";
+        alteraProfissional();
     }//GEN-LAST:event_btAlterarActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        alterarProfissional();
+    }//GEN-LAST:event_btSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,6 +374,7 @@ public class PesquisaProfissional extends javax.swing.JFrame {
     private javax.swing.JButton btFinalizar;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btPesquisar;
+    private javax.swing.JButton btSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
