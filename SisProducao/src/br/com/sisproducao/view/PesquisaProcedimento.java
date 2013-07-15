@@ -4,6 +4,14 @@
  */
 package br.com.sisproducao.view;
 
+import br.com.sisproducao.control.CadastroControlImpl;
+import br.com.sisproducao.model.ProcedimentoDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,8 +20,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PesquisaProcedimento extends javax.swing.JFrame {
 
-    DefaultTableModel tmProcedimento = new DefaultTableModel();
-   
+    DefaultTableModel tmProcedimento = new DefaultTableModel(null, new String[] {"id", "nome"});
+    List<ProcedimentoDTO> procedimentos;
+    ListSelectionModel lsmProcedimentos;
 
     /**
      * Creates new form PesquisaPrestador
@@ -22,7 +31,46 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
         initComponents();
     }
     
+    private void pesquisaProcedimento(){
+        CadastroControlImpl cad = new CadastroControlImpl();
+        procedimentos = cad.lista_procedimento("%"+ txtNome.getText().trim()+ "%", WIDTH);
+        mostrarProcedimentos(procedimentos);
+    }
     
+    private void mostrarProcedimentos(List<ProcedimentoDTO> procedimentos){
+        while(tmProcedimento.getRowCount() < 0){
+            tmProcedimento.removeRow(0);
+        }
+        if(procedimentos.size() == 0){
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro!");
+        }else{
+            String[] campos = new String[] {null, null};
+            for(int i = 0; i < procedimentos.size();i++){
+                tmProcedimento.addRow(campos);
+                tmProcedimento.setValueAt(procedimentos.get(i).getId(), i, 0);
+                tmProcedimento.setValueAt(procedimentos.get(i).getNome(), i, 1);
+            }
+        }  
+    }
+    
+    private void tbProcedimentoLinhaSelecionada(JTable tb){
+        if(tb.getSelectedRow()!= -1){
+            txtId.setText(String.valueOf(procedimentos.get(tb.getSelectedRow()).getId()));
+            txtNome.setText(procedimentos.get(tb.getSelectedRow()).getNome());
+        }else{
+            txtId.setText("");
+            txtNome.setText("");
+        }
+    
+    }
+    
+    private void alterarProcedimento(){
+        ProcedimentoDTO pro = new ProcedimentoDTO(WIDTH, null);
+        pro.setId(procedimentos.get(tbProcedimento.getSelectedRow()).getId());
+        pro.setNome(txtNome.getText().trim());
+        CadastroControlImpl cad = new CadastroControlImpl();
+        cad.update(pro);
+    }
 
     
 
@@ -44,7 +92,7 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbProcedimento = new javax.swing.JTable();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btFinalizar = new javax.swing.JButton();
@@ -61,6 +109,11 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
         jLabel1.setText("Id:");
 
         btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -100,8 +153,17 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Procedimentos"));
 
-        jTable1.setModel(tmProcedimento);
-        jScrollPane1.setViewportView(jTable1);
+        tbProcedimento.setModel(tmProcedimento);
+        tbProcedimento.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmProcedimentos = tbProcedimento.getSelectionModel();
+        lsmProcedimentos.addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                if (! e.getValueIsAdjusting()){
+                    tbProcedimentoLinhaSelecionada(tbProcedimento);
+                }
+            }
+        });
+        jScrollPane1.setViewportView(tbProcedimento);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -120,6 +182,11 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
         );
 
         btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
 
@@ -193,8 +260,8 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-500)/2, (screenSize.height-320)/2, 500, 320);
+        setSize(new java.awt.Dimension(500, 320));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -205,6 +272,14 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
         dispose();
     }//GEN-LAST:event_btFinalizarActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        pesquisaProcedimento();
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        alterarProcedimento();
+    }//GEN-LAST:event_btAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,7 +327,7 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbProcedimento;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

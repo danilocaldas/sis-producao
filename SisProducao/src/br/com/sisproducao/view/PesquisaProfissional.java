@@ -4,6 +4,14 @@
  */
 package br.com.sisproducao.view;
 
+import br.com.sisproducao.control.CadastroControlImpl;
+import br.com.sisproducao.model.ProfissionalDTO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -11,14 +19,60 @@ import javax.swing.table.DefaultTableModel;
  * @author ritacosta
  */
 public class PesquisaProfissional extends javax.swing.JFrame {
-    DefaultTableModel tmProfissional = new DefaultTableModel();
+    DefaultTableModel tmProfissional = new DefaultTableModel(null, new String[] {"id", "nome", "senha"});
+    List<ProfissionalDTO> profissionais;
+    ListSelectionModel lsmProfissionais;
     /**
      * Creates new form PesquisaPrestador
      */
     public PesquisaProfissional() {
         initComponents();
     }
-
+    
+    private void pesquisarProfissionais(){
+        CadastroControlImpl cad = new CadastroControlImpl();
+        profissionais = cad.lista_profissional("%"+txtNome.getText().trim()+"%", null, WIDTH);
+        mostrarProfissionais(profissionais);
+    }
+    
+    private void mostrarProfissionais(List<ProfissionalDTO> profissionais){
+        while(tmProfissional.getRowCount() < 0){
+            tmProfissional.removeRow(0);
+        }
+        if(profissionais.size() == 0){
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro!");
+        }else{
+            String[] campos = new String[]{null, null, null};
+            for(int i = 0; i < profissionais.size(); i++){
+                tmProfissional.addRow(campos);
+                tmProfissional.setValueAt(profissionais.get(i).getId(), i, 0);
+                tmProfissional.setValueAt(profissionais.get(i).getNome(), i, 1);
+                tmProfissional.setValueAt(profissionais.get(i).getSenha(), i, 2);
+            }
+        }
+    }
+    
+     private void tbProfissionalLinhaSelecionada(JTable tb) {
+        if (tb.getSelectedRow() != -1) {
+            txtId.setText(String.valueOf(profissionais.get(tb.getSelectedRow()).getId()));
+            txtNome.setText(profissionais.get(tb.getSelectedRow()).getNome());
+            ptxtSenha.setText(profissionais.get(tb.getSelectedRow()).getSenha());
+        } else {
+            txtId.setText("");
+            txtNome.setText("");
+            ptxtSenha.setText("");
+        }
+    }
+     
+    private void alterarProfissional(){ 
+        ProfissionalDTO prof = new ProfissionalDTO(WIDTH, null, null);
+        prof.setId(profissionais.get(tbProfissional.getSelectedRow()).getId());
+        prof.setNome(txtNome.getText().trim());
+        prof.setSenha(ptxtSenha.getText().trim());
+        CadastroControlImpl cad = new CadastroControlImpl();
+        cad.update(prof);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,9 +89,11 @@ public class PesquisaProfissional extends javax.swing.JFrame {
         btPesquisar = new javax.swing.JButton();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        ptxtSenha = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbProfissional = new javax.swing.JTable();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btFinalizar = new javax.swing.JButton();
@@ -54,8 +110,15 @@ public class PesquisaProfissional extends javax.swing.JFrame {
         jLabel1.setText("Id:");
 
         btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
+
+        jLabel3.setText("Senha:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -68,11 +131,15 @@ public class PesquisaProfissional extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtNome)
+                        .addComponent(ptxtSenha)
                         .addGap(18, 18, 18)
                         .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))))
@@ -82,19 +149,30 @@ public class PesquisaProfissional extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btPesquisar)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Profissionais"));
 
-        jTable1.setModel(tmProfissional);
-        jScrollPane1.setViewportView(jTable1);
+        tbProfissional.setModel(tmProfissional);
+        tbProfissional.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmProfissionais = tbProfissional.getSelectionModel();
+        lsmProfissionais.addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                if (! e.getValueIsAdjusting()){
+                    tbProfissionalLinhaSelecionada(tbProfissional);
+                }
+            }
+        });
+        jScrollPane1.setViewportView(tbProfissional);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -113,6 +191,11 @@ public class PesquisaProfissional extends javax.swing.JFrame {
         );
 
         btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
 
@@ -186,8 +269,8 @@ public class PesquisaProfissional extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-500)/2, (screenSize.height-320)/2, 500, 320);
+        setSize(new java.awt.Dimension(500, 320));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -198,6 +281,14 @@ public class PesquisaProfissional extends javax.swing.JFrame {
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
         dispose();
     }//GEN-LAST:event_btFinalizarActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        pesquisarProfissionais();
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        alterarProfissional();
+    }//GEN-LAST:event_btAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,11 +332,13 @@ public class PesquisaProfissional extends javax.swing.JFrame {
     private javax.swing.JButton btPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPasswordField ptxtSenha;
+    private javax.swing.JTable tbProfissional;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
