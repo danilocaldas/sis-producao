@@ -132,11 +132,14 @@ public class CadastroControlImpl implements CadastroControl {
                 pre.setId(rs.getInt("id"));
                 pre.setNome(rs.getString("nome"));
                 prestadores.add(pre);
+                
             }
+            bd.desconectar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel listar os Prestadores!" + ex);
         }
         return prestadores;
+        
     }
 
     @Override
@@ -152,7 +155,9 @@ public class CadastroControlImpl implements CadastroControl {
                 proc.setId(rs.getInt("id"));
                 proc.setNome(rs.getString("nome"));
                 procedimentos.add(proc);
+                
             }
+            bd.desconectar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel listar os Procedimentos!" + ex);
 
@@ -174,10 +179,14 @@ public class CadastroControlImpl implements CadastroControl {
                 pro.setNome(rs.getString("nome"));
                 pro.setSenha(rs.getString("senha"));
                 profissionais.add(pro);
+                
             }
+            bd.desconectar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel listar os Profissionais!" + ex);
         }
         return profissionais;
+        
+            
     }
 }

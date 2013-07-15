@@ -52,6 +52,11 @@ public class SisProducao extends javax.swing.JFrame {
         PesquisaProfissional pes_prof = new PesquisaProfissional();
         pes_prof.setVisible(true);
     }
+    
+    public void abrirPesquisaProducao(){
+        PesquisaProducao pes_proProducao = new PesquisaProducao();
+        pes_proProducao.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +78,7 @@ public class SisProducao extends javax.swing.JFrame {
         jmiPesquisaPrestador = new javax.swing.JMenuItem();
         jmiPesquisaProcedimento = new javax.swing.JMenuItem();
         jmiPesquisaProfissional = new javax.swing.JMenuItem();
+        menuItemProducao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Controle de Produção - CMR");
@@ -84,11 +90,11 @@ public class SisProducao extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 483, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Início");
@@ -156,6 +162,14 @@ public class SisProducao extends javax.swing.JFrame {
         });
         jMenu3.add(jmiPesquisaProfissional);
 
+        menuItemProducao.setText("Produção");
+        menuItemProducao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemProducaoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuItemProducao);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -171,8 +185,8 @@ public class SisProducao extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-503)/2, (screenSize.height-387)/2, 503, 387);
+        setSize(new java.awt.Dimension(503, 387));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiCadastroPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadastroPrestadorActionPerformed
@@ -202,6 +216,10 @@ public class SisProducao extends javax.swing.JFrame {
     private void jmiPesquisaProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaProfissionalActionPerformed
         abrirPesquisaProfissional();
     }//GEN-LAST:event_jmiPesquisaProfissionalActionPerformed
+
+    private void menuItemProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemProducaoActionPerformed
+        abrirPesquisaProducao();
+    }//GEN-LAST:event_menuItemProducaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,5 +268,6 @@ public class SisProducao extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiPesquisaPrestador;
     private javax.swing.JMenuItem jmiPesquisaProcedimento;
     private javax.swing.JMenuItem jmiPesquisaProfissional;
+    private javax.swing.JMenuItem menuItemProducao;
     // End of variables declaration//GEN-END:variables
 }

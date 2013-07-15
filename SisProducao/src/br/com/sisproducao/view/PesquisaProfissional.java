@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ritacosta
+ * @author Samu
  */
 public class PesquisaProfissional extends javax.swing.JFrame {
     

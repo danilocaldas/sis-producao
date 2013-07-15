@@ -51,7 +51,6 @@
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="Insira o nome do procedimento">
               <Font PropertyName="font" name="Arial" size="12" style="0"/>
-              <Color PropertyName="color" blue="0" green="0" red="0" type="rgb"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -65,9 +64,9 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="btSalvar" linkSize="1" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btSalvar" min="-2" pref="104" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btFinalizar" linkSize="1" min="-2" pref="104" max="-2" attributes="0"/>
+                          <Component id="btFinalizar" min="-2" pref="104" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtNomeProcedimento" alignment="0" max="32767" attributes="0"/>
                   </Group>
