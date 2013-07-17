@@ -36,9 +36,12 @@ public class PesquisaProducao extends javax.swing.JFrame {
         List<ProcedimentoDTO> procedimento;
         List<PrestadorDTO> prestadores;
         CadastroControlImpl cad = new CadastroControlImpl();
+        CadastroProducaoControlImpl cad_2 = new CadastroProducaoControlImpl();
         ListSelectionModel lsmPesquisaProducao;
         String tipoCadastro;
         
+        
+       
     
     /**
      * Creates new form PesquisaProducao
@@ -79,10 +82,10 @@ public class PesquisaProducao extends javax.swing.JFrame {
     }
      
     public void pesquisaProducao(){
-        CadastroProducaoControlImpl cad_2 = new CadastroProducaoControlImpl();
         producoes = cad_2.listar_producao(WIDTH,null, null,
                 "%"+cbProfissional.getSelectedItem().toString()+"%", null, null, WIDTH);
         mostrarProducao(producoes);
+        
     } 
     
     public void mostrarProducao(List<CadastroProducaoDTO> producoes){
@@ -101,7 +104,9 @@ public class PesquisaProducao extends javax.swing.JFrame {
                 tmProducao.setValueAt(producoes.get(i).getDataentrada(), i, 3);
                 tmProducao.setValueAt(producoes.get(i).getDatadigitacao(), i, 4);
                 tmProducao.setValueAt(producoes.get(i).getQuantidade(), i, 5);
+                
             }
+            
         }
     }
     
@@ -122,6 +127,7 @@ public class PesquisaProducao extends javax.swing.JFrame {
 
     }
     
+   
     private void alteraProducao() {
         if (tbPesquisaProducao.getSelectedRow() != -1) {
             habilitarCampos();
@@ -143,8 +149,8 @@ public class PesquisaProducao extends javax.swing.JFrame {
         pro.setDatadigitacao(Date.valueOf(formato.format(dataDigitacao)));
         pro.setQuantidade(Integer.parseInt(String.valueOf(ftxtQuantidade.getValue())));
         
-        CadastroProducaoControlImpl cad = new CadastroProducaoControlImpl();
-        cad.update(pro);
+        CadastroProducaoControlImpl cad3 = new CadastroProducaoControlImpl();
+        cad3.update(pro);
     }
     
     
@@ -187,6 +193,8 @@ public class PesquisaProducao extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPesquisaProducao = new javax.swing.JTable();
+        txtTotal = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         Novo = new javax.swing.JButton();
         Alterar = new javax.swing.JButton();
         btFinalizar = new javax.swing.JButton();
@@ -297,15 +305,28 @@ public class PesquisaProducao extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbPesquisaProducao);
 
+        jLabel10.setText("Total:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         Novo.setText("Novo");
@@ -381,7 +402,7 @@ public class PesquisaProducao extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(ftxtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jdDataDigitacao, jdDataEntrada});
@@ -503,11 +524,11 @@ public class PesquisaProducao extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 708, 560);
+        setBounds(0, 0, 708, 542);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-       pesquisaProducao();
+        pesquisaProducao();
     }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
@@ -577,6 +598,7 @@ public class PesquisaProducao extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -595,5 +617,6 @@ public class PesquisaProducao extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jdDataEntrada;
     private javax.swing.JTable tbPesquisaProducao;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

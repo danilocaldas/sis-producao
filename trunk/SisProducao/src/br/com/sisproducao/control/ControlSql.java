@@ -23,6 +23,9 @@ public class ControlSql {
     String updateProcedimentos = "UPDATE PROCEDIMENTOS SET NOME = ? WHERE ID = ?";
     String updateProfissionais = "UPDATE PROFISSIONAIS SET NOME = ?, SENHA = ? WHERE ID = ?";
     String updatePrestadores = "UPDATE PRESTADORES SET NOME = ? WHERE ID = ?";
-    String updateProducao = "";
+    String updateProducao = "UPDATE PRODUCAO SET PRESTADORES = ?, PROCEDIMENTOS = ?,"
+            + "DATAENTRADA = ?, DATADIGITACAO = ?, QUANTIDADE = ?"
+            + " WHERE ID = ?";
    
+    String somaProducao = "SELECT sum(QUANTIDADE) FROM PRODUCAO WHERE PROFISSIONAIS LIKE ?";
 }
