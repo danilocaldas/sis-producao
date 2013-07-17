@@ -33,9 +33,12 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setString(1, prestador.getNome());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel efetuar o cadastro"+ex);
         }
+        
     }
 
     @Override
@@ -51,8 +54,10 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setInt(2, prestador.getId());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel concluir a alteraração do prestador!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel concluir a alteraração do prestador!" + ex);
         }
 
     }
@@ -64,8 +69,10 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setString(1, procedimento.getNome());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel efetuar o cadastro"+ex);
         }
     }
 
@@ -82,8 +89,10 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setInt(2, procedimento.getId());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel alterar o prestador!" + e);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel alterar o prestador!" + e);
         }
     }
 
@@ -95,8 +104,10 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setString(2, profissional.getSenha());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel efetuar o cadastro"+ex);
         }
     }
 
@@ -114,8 +125,10 @@ public class CadastroControlImpl implements CadastroControl {
             pstm.setInt(3, profissional.getId());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel alterar o profissional!"+ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel alterar o profissional!"+ex);
         }
     }
 
@@ -136,7 +149,8 @@ public class CadastroControlImpl implements CadastroControl {
             }
             bd.desconectar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel listar os Prestadores!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel listar os Prestadores!" + ex);
         }
         return prestadores;
         
@@ -159,7 +173,8 @@ public class CadastroControlImpl implements CadastroControl {
             }
             bd.desconectar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel listar os Procedimentos!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel listar os Procedimentos!" + ex);
 
         }
         return procedimentos;
@@ -183,7 +198,8 @@ public class CadastroControlImpl implements CadastroControl {
             }
             bd.desconectar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel listar os Profissionais!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados. "
+                    + "Não foi possivel listar os Profissionais!" + ex);
         }
         return profissionais;
         

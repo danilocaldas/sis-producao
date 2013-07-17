@@ -37,9 +37,12 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
             pstm.setInt(6, cadProducao.getQuantidade());
             pstm.executeUpdate();
             bd.desconectar();
+            JOptionPane.showMessageDialog(null, 
+                    "Cadastro Realizado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
-                    "Erro na base de dados. Não foi possivel salvar o registro!"+ex);
+                    "Erro na base de dados. "
+                    + "Não foi possivel salvar o registro!"+ex);
         }
     
     }
@@ -62,9 +65,12 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
         pstm.setLong(6, cadProducao.getId());
         pstm.executeUpdate();
         bd.desconectar();
+        JOptionPane.showMessageDialog(null, 
+                "Registro alterado com sucesso!");
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null,
-                    "Erro na base de dados. Não foi possivel alterar o registro!"+ex);
+                    "Erro na base de dados."
+                    + " Não foi possivel alterar o registro!"+ex);
         }
     }
 
@@ -92,12 +98,11 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
             bd.desconectar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, 
-                    "Erro na base de dados. Não foi possivel listar a produção!"+ex);
+                    "Erro na base de dados. "
+                    + "Não foi possivel listar a produção!"+ex);
         }
         
     return producao;
     }
 
-   
-    
 }

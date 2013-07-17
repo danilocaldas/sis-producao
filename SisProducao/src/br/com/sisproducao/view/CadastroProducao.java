@@ -114,9 +114,9 @@ public class CadastroProducao extends javax.swing.JFrame {
      * salvar a producao na base de dados
      */
     public void salvarProducao(){
-        CadastroProducaoControlImpl cad = new CadastroProducaoControlImpl();
+        CadastroProducaoControlImpl cad_1 = new CadastroProducaoControlImpl();
         for(int i = 0; i < producoes.size(); i++){
-            cad.save(producoes.get(i));
+            cad_1.save(producoes.get(i));
         }
     }
     /**

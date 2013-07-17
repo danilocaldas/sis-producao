@@ -23,6 +23,7 @@ public class Login extends javax.swing.JFrame {
         if(txtUsuario.getText().equals("admin") && ptxtSenha.getText().equals("admin")){
             SisProducao sis = new SisProducao();
             sis.setVisible(true);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Usuario não permitido!");
         }

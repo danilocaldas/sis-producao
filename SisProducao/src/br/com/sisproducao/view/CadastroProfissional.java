@@ -2,6 +2,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.ProfissionalDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,14 +14,26 @@ public class CadastroProfissional extends javax.swing.JFrame {
         initComponents();
     }
     //metodo para salvar profissional na base de dados
+
     public void salvarProfissional() {
-        //pegando valor do campo de texto
-        ProfissionalDTO prof = new ProfissionalDTO(WIDTH, null, null);
-        prof.setNome(txtNomeProfissional.getText().trim());
-        prof.setSenha(ptxtSenha.getText().trim());
-        CadastroControlImpl controlProf = new CadastroControlImpl();
-        controlProf.save(prof);
+        if (txtNomeProfissional.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Insira o nome do profissional!");
+        } else if (ptxtSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Insira a senha do profissional!");
+        } else {
+            ProfissionalDTO prof = new ProfissionalDTO(WIDTH, null, null);
+            prof.setNome(txtNomeProfissional.getText().trim());
+            prof.setSenha(ptxtSenha.getText().trim());
+            CadastroControlImpl controlProf = new CadastroControlImpl();
+            controlProf.save(prof);
+            limparCampo();
+        }
     }//fim
+
+    public void limparCampo() {
+        txtNomeProfissional.setText("");
+        ptxtSenha.setText("");
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
