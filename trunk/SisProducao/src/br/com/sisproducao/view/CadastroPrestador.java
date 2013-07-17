@@ -2,6 +2,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.PrestadorDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,14 +14,26 @@ public class CadastroPrestador extends javax.swing.JFrame {
         initComponents();
     }
     //metodo para salvar prestador na base de dados
+
     public void salvarPrestador() {
-        //pegando valor do campo de texto
-        PrestadorDTO pres = new PrestadorDTO(WIDTH, null);
-        pres.setNome(txtNomePrestador.getText().trim());
-       
-        CadastroControlImpl controlPres = new CadastroControlImpl();
-        controlPres.save(pres);
+        
+        if (txtNomePrestador.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Insira o Prestador!");
+        } else {
+            PrestadorDTO pres = new PrestadorDTO(WIDTH, null);
+            pres.setNome(txtNomePrestador.getText().trim());
+
+            CadastroControlImpl controlPres = new CadastroControlImpl();
+            controlPres.save(pres);
+            limparCampo();
+        }
+
     }//fim
+    
+    public void limparCampo() {
+        txtNomePrestador.setText("");
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -2,6 +2,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.ProcedimentoDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,14 +14,23 @@ public class CadastroProcedimento extends javax.swing.JFrame {
         initComponents();
     }
     //metodo para salvar procedimento na base de dados
+
     public void salvarProcedimento() {
-        ProcedimentoDTO pro = new ProcedimentoDTO(WIDTH, null);
-        pro.setNome(txtNomeProcedimento.getText().trim());
+        if (txtNomeProcedimento.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Insira o Procedimento!");
+        } else {
+            ProcedimentoDTO pro = new ProcedimentoDTO(WIDTH, null);
+            pro.setNome(txtNomeProcedimento.getText().trim());
 
-        CadastroControlImpl controlPro = new CadastroControlImpl();
-        controlPro.save(pro);
-
+            CadastroControlImpl controlPro = new CadastroControlImpl();
+            controlPro.save(pro);
+            limparCampo();
+        }
     }//fim
+
+    public void limparCampo() {
+        txtNomeProcedimento.setText("");
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
