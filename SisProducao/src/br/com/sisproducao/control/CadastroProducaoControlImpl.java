@@ -38,7 +38,8 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
             pstm.executeUpdate();
             bd.desconectar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null,
+                    "Erro na base de dados. Não foi possivel salvar o registro!"+ex);
         }
     
     }
@@ -50,7 +51,21 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
 
     @Override
     public void update(CadastroProducaoDTO cadProducao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+        pstm = bd.conectar().prepareStatement(sql.updateProducao);
+        pstm.setString(1, cadProducao.getPrestadores());
+        pstm.setString(2, cadProducao.getProcedimentos());
+        //pstm.setString(3, cadProducao.getProfissionais());
+        pstm.setDate(3, (Date)cadProducao.getDataentrada());
+        pstm.setDate(4, (Date)cadProducao.getDatadigitacao());
+        pstm.setInt(5, cadProducao.getQuantidade());
+        pstm.setLong(6, cadProducao.getId());
+        pstm.executeUpdate();
+        bd.desconectar();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,
+                    "Erro na base de dados. Não foi possivel alterar o registro!"+ex);
+        }
     }
 
     @Override
@@ -76,10 +91,13 @@ public class CadastroProducaoControlImpl implements CadastroProducaoControl{
             }
             bd.desconectar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possivel listar a produção!"+ex);
+            JOptionPane.showMessageDialog(null, 
+                    "Erro na base de dados. Não foi possivel listar a produção!"+ex);
         }
         
     return producao;
     }
+
+   
     
 }

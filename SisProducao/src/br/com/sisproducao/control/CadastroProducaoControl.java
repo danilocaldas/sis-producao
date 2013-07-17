@@ -18,4 +18,5 @@ public interface CadastroProducaoControl {
     public void update(CadastroProducaoDTO cadProducao);
     public List<CadastroProducaoDTO> listar_producao(int id, String prestadores, String procedimentos, 
             String profissionais, Date dataentrada, Date datadigitacao, int quantidade);
+    
 }
