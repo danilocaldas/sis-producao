@@ -160,14 +160,14 @@ public class CadastroProducao extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jToolBar1 = new javax.swing.JToolBar();
+        btFinalizar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
-        btFinalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro");
-        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -281,23 +281,34 @@ public class CadastroProducao extends javax.swing.JFrame {
         jTable1.setModel(tmProducao);
         jScrollPane1.setViewportView(jTable1);
 
-        btNovo.setText("Novo");
-
-        btSalvar.setText("Salvar");
-        btSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSalvarActionPerformed(evt);
-            }
-        });
-
-        btCancelar.setText("Cancelar");
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
 
         btFinalizar.setText("Finalizar");
+        btFinalizar.setMaximumSize(new java.awt.Dimension(103, 40));
         btFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btFinalizarActionPerformed(evt);
             }
         });
+        jToolBar1.add(btFinalizar);
+
+        btNovo.setText("Novo");
+        btNovo.setMaximumSize(new java.awt.Dimension(103, 40));
+        jToolBar1.add(btNovo);
+
+        btSalvar.setText("Salvar");
+        btSalvar.setMaximumSize(new java.awt.Dimension(103, 40));
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btSalvar);
+
+        btCancelar.setText("Cancelar");
+        btCancelar.setMaximumSize(new java.awt.Dimension(103, 40));
+        jToolBar1.add(btCancelar);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -307,29 +318,15 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btSalvar)
-                        .addGap(14, 14, 14)
-                        .addComponent(btCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btFinalizar)))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btFinalizar, btNovo, btSalvar});
-
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btNovo)
-                    .addComponent(btSalvar)
-                    .addComponent(btCancelar)
-                    .addComponent(btFinalizar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -382,8 +379,8 @@ public class CadastroProducao extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-514)/2, (screenSize.height-492)/2, 514, 492);
+        setSize(new java.awt.Dimension(522, 521));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirActionPerformed
@@ -459,6 +456,7 @@ public class CadastroProducao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JFormattedTextField jftxtQuantidade;
     // End of variables declaration//GEN-END:variables
 }
