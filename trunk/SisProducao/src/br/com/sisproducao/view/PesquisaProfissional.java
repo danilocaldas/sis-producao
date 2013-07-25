@@ -6,6 +6,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.ProfissionalDTO;
+import static java.awt.image.ImageObserver.WIDTH;
 
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -32,16 +33,20 @@ public class PesquisaProfissional extends javax.swing.JFrame {
      */
     public PesquisaProfissional() {
         initComponents();
-        desabilitarCampos();
+        //desabilitarCampos();
         txtId.setEnabled(false);
 
     }
 
     private void pesquisarProfissionais() {
+        if(txtNome.getText().equals("")){
+        JOptionPane.showMessageDialog(null, "Campo necessário para a pesquisa!");
+        }else{
         CadastroControlImpl cad = new CadastroControlImpl();
         profissionais = cad.lista_profissional("%" + txtNome.getText().trim() + "%", null, WIDTH);
-        mostrarProfissionais(profissionais);
-    }
+        mostrarProfissionais(profissionais);    
+        }
+     }
 
     private void mostrarProfissionais(List<ProfissionalDTO> profissionais) {
         while (tmProfissional.getRowCount() < 0) {
