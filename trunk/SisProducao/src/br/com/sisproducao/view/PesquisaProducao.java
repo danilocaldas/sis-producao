@@ -80,13 +80,14 @@ public class PesquisaProducao extends javax.swing.JFrame {
             cbProfissional.addItem(profissional.get(i).getNome());
         }
     }
-     
+    /**
+      
     public void pesquisaProducao(){
         producoes = cad_2.listar_producao(WIDTH,null, null,
                 "%"+cbProfissional.getSelectedItem().toString()+"%", , null, WIDTH);
         mostrarProducao(producoes);
         
-    } 
+    }*/ 
     
     public void mostrarProducao(List<CadastroProducaoDTO> producoes){
         while(tmProducao.getRowCount() < 0){
@@ -528,7 +529,7 @@ public class PesquisaProducao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        pesquisaProducao();
+       // pesquisaProducao();
     }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
