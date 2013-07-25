@@ -6,6 +6,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.PrestadorDTO;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -30,14 +31,18 @@ public class PesquisaPrestador extends javax.swing.JFrame {
      */
     public PesquisaPrestador() {
         initComponents();
-        desabilitarCampos();
+        //desabilitarCampos();
         txtId.setEnabled(false);
     }
 
     private void pesquisaPrestador() {
+        if(txtNome.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Campo necessário para a pesquisa!");
+        }else{
         CadastroControlImpl cad = new CadastroControlImpl();
         prestadores = cad.lista_prestador("%" + txtNome.getText().trim() + "%", WIDTH);
-        mostrarPrestadores(prestadores);
+        mostrarPrestadores(prestadores);    
+        }
     }
 
     private void mostrarPrestadores(List<PrestadorDTO> prestadores) {
@@ -82,7 +87,7 @@ public class PesquisaPrestador extends javax.swing.JFrame {
         cad.update(pres);
         desabilitarCampos();
     }
-
+    
     private void habilitarCampos() {
         txtNome.setEnabled(true);
     }

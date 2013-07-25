@@ -18,7 +18,7 @@ public class ControlSql {
     String selectProcedimentos = "SELECT * FROM PROCEDIMENTOS WHERE NOME LIKE ?";
     String selectProfissionais = "SELECT * FROM PROFISSIONAIS WHERE NOME LIKE ?";
     String selectPrestadores = "SELECT * FROM PRESTADORES WHERE NOME LIKE ?";
-    String selectProducao = "SELECT * FROM PRODUCAO WHERE PROFISSIONAIS LIKE ?";
+    String selectProducao = "SELECT * FROM PRODUCAO WHERE PROFISSIONAIS LIKE ? AND DATADIGITACAO LIKE ? AND LIKE ?";
     
     String updateProcedimentos = "UPDATE PROCEDIMENTOS SET NOME = ? WHERE ID = ?";
     String updateProfissionais = "UPDATE PROFISSIONAIS SET NOME = ?, SENHA = ? WHERE ID = ?";

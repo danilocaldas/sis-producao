@@ -6,6 +6,7 @@ package br.com.sisproducao.view;
 
 import br.com.sisproducao.control.CadastroControlImpl;
 import br.com.sisproducao.model.ProcedimentoDTO;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -30,15 +31,19 @@ public class PesquisaProcedimento extends javax.swing.JFrame {
      */
     public PesquisaProcedimento() {
         initComponents();
-        desabilitarCampos();
+        //desabilitarCampos();
         txtId.setEnabled(false);
 
     }
 
     private void pesquisaProcedimento() {
+        if(txtNome.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Campo necessário para a pesquisa!");
+        }else{
         CadastroControlImpl cad = new CadastroControlImpl();
         procedimentos = cad.lista_procedimento("%" + txtNome.getText().trim() + "%", WIDTH);
-        mostrarProcedimentos(procedimentos);
+        mostrarProcedimentos(procedimentos);    
+        }
     }
 
     private void mostrarProcedimentos(List<ProcedimentoDTO> procedimentos) {
