@@ -1,0 +1,1 @@
+Ajudar na produção dos digitação...controlando a produção dos mesmos.
